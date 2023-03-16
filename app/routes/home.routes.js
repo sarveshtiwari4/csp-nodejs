@@ -1,5 +1,5 @@
 module.exports = app => {
-  //const isvalid = require("../auth");
+  const isValid = require("../routes/verifyToken");
   
 
   const home = require("../controllers/home.controller.js");
@@ -10,10 +10,10 @@ module.exports = app => {
   router.post("/", home.create);
 
   // Retrieve all Tutorials
-  router.get("/", home.findAll);
+  router.get("/" , home.findAll);
 
   // Retrieve all published Tutorials
-  router.get("/published",home.findAllPublished);
+  router.get("/published",isValid, home.findAllPublished);
 
   router.get("/publishedtop5",home.findAllPublishedtop5);
 

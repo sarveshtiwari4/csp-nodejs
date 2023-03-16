@@ -8,6 +8,7 @@ const Login = function(user) {
 
     this.username = user.username;
     this.password = user.password;
+    this.id=user.id;
     //this.published = tutorial.published;
   };
  
@@ -28,15 +29,17 @@ const Login = function(user) {
        
           // Handle error after the release.
           if (error) throw error;
-
+          
           let user=results[0];
 
-          console.log(result.length);
+          const payload={
+            userid:user.id
+          }
+         //console.log(payload);
  
          // bcrypt.compare(data.password, user.password )
             
-
-          const token = jwt.sign(data, jwtSecretKey);
+          const token = jwt.sign(payload, jwtSecretKey);
 
           
            result(null, token);

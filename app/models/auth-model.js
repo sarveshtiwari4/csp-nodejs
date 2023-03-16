@@ -31,7 +31,7 @@ let model = {
     },
 
    findOne: (username, cb) => {
-        return db.query("SELECT password FROM users WHERE username=? ", [username], cb);
+        return db.query("SELECT * FROM users WHERE username=? ", [username], cb);
     },
     findById: (id, cb) => {
         return db.query("SELECT * FROM users WHERE id=? ", [id], cb);

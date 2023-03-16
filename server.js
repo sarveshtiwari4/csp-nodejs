@@ -1,4 +1,5 @@
 var express =require("express");
+var compression=require("compression");
 var  cors=require("cors");
 const passport = require("passport");
 require("./app/config/passport-config");
@@ -6,7 +7,25 @@ require("./app/config/passport-config");
 //var productRouter = require('./app/routes/product');
 
 var app =express();
+
+app.set('etag', false);
+
 //app.use('/product', passport.authenticate('jwt', { session: false }), productRouter);
+app.use(compression());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
+    res.header("X-Frame-Options","DENY, SAMEORIGIN");
+    res.header("Strict-Transport-Security","max-age=31536000; includeSubdomains; preload");
+    res.header("X-XSS-Protection","1; mode=block");
+    res.header("X-Content-Type-Options","nosniff");
+    res.header('Access-Control-Allow-Methods', ' POST, GET,PUT');
+
+    next();
+  });
+
+
+
 app.use(cors());
     
 app.use(express.json());
@@ -47,4 +66,5 @@ const PORT=process.env.PORT ||3000;
 app.listen(PORT,()=>{
     console.log (`Server is running on port ${PORT}`);
 });
+
 

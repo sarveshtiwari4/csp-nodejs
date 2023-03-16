@@ -11,8 +11,9 @@ options.secretOrKey = 'secret123';
 
  passport.use(new LocalStrategy(
     {
-        usernameField: 'username',
-        passwordField: 'password'
+        username: 'username',
+        password: 'password',
+        id:'id'
     },
      function(username, password, done) {
          authModel.findOne(username, function(err, result) {

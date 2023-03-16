@@ -6,6 +6,6 @@ module.exports = {
   PASSWORD: "rootadmin",
   //PASSWORD: "sarvesh",
   DB: "website"
- // DB: "website"git
+ // DB: "website"
 
   };

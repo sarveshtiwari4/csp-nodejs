@@ -1,4 +1,4 @@
-const { response } = require('express');
+//const { response } = require('express');
 
 module.exports = app => {
 
@@ -8,8 +8,11 @@ module.exports = app => {
     var bcrypt = require('bcryptjs');
     var passport = require('passport');
     var jwt = require('jsonwebtoken');
+    var cryptojs = require('crypto-js');
     
     router.post('/signup', function(req, res) {
+               
+
         const password = req.body.password;
         const saltRounds = 10;
         bcrypt.hash(password, saltRounds, function(err, hash) {
@@ -53,14 +56,22 @@ module.exports = app => {
        
     })
        
-        
-   
-
-
-
-
     
     router.post('/login', function(req, res, next) {
+
+        var pwd = req.body.password;
+        const siteKey="rr6LkkkkfbR8shhhkAA2zjjjjMSqaBYcLPs16c4oX14555887"
+
+        try {
+            var bytes = cryptojs.AES.decrypt(pwd, siteKey);
+            if (bytes.toString()) {
+              pwd= JSON.parse(bytes.toString(cryptojs.enc.Utf8));
+              req.body.password=pwd;
+            }
+            
+          } catch (e) {
+            console.log(e);
+          }
 
         passport.authenticate('local', {session: false}, function(err, user, info) {
             
@@ -71,14 +82,15 @@ module.exports = app => {
             }
     
             const payload = {
-                username: user.username,
+                username: user.last_name,
                 email: user.email
             }
             const options = {
                 subject: `${user.id}`,
-                expiresIn: 3600
+                expiresIn: 900
             }
-            const token = jwt.sign(payload, 'secret123', options);
+          // console.log(payload);
+            const token = jwt.sign(payload, 'secret@#$%123',options);
             
             res.json({token});
     
