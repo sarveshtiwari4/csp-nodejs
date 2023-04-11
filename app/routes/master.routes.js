@@ -1,5 +1,6 @@
 module.exports = app => {
-  //const isvalid = require("../auth");
+  const isValid = require("./verifyToken");
+
   console.log("200");
   const master = require("../controllers/master.controller.js");
 
@@ -7,7 +8,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Create a newmaster
-  router.post("/", master.create);
+  router.post("/",isValid, master.create);
 
   // Retrieve all Tutorials
   router.get("/",master.findAll);
@@ -19,13 +20,13 @@ module.exports = app => {
   router.get("/:id",master.findOne);
 
   // Update amaster with id
-  router.put("/:id",master.update);
+  router.put("/:id",isValid,master.update);
 
   // Delete amaster with id
-  router.delete("/:id",master.delete);
+  router.delete("/:id",isValid,master.delete);
 
   // Delete all Tutorials
-  router.delete("/",master.deleteAll);
+  router.delete("/",isValid,master.deleteAll);
 
   app.use('/api/master', router);
 };

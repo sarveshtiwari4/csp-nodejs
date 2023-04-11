@@ -12,12 +12,12 @@ const Notification = function(notification) {
 Notification.create = (newNoti, result) => {
   sql.query("INSERT INTO notification SET ?", newNoti, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+     // console.log("error: ", err);
       result(err, null);
       return;
     }
 
-    console.log("created Home: ", { id: res.insertNoti, ...newNoti });
+   // console.log("created Home: ", { id: res.insertNoti, ...newNoti });
     result(null, { id: res.insertNoti, ...newNoti });
   });
 };

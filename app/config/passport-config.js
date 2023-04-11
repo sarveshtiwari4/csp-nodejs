@@ -13,15 +13,18 @@ options.secretOrKey = 'secret123';
     {
         username: 'username',
         password: 'password',
-        id:'id'
+       
     },
      function(username, password, done) {
+          
          authModel.findOne(username, function(err, result) {
 
             if (err) { return done(err); }
     
             if (result.length === 0) {
-                return done(null, false, {message: 'Incorrect username.'});
+                
+                return done( null,false, {message: 'Incorrect username.'});
+               
             }
 
             const user = result[0];
@@ -29,7 +32,8 @@ options.secretOrKey = 'secret123';
              bcrypt.compare(password, user.password, function(err, result) {
 
                 if (!result) {
-                    return done(null, false, {message:'Incorrect password.'});
+                    return done( null,false, {message:'Incorrect password.'});
+                   
                 }
                 return done(null, user);
             })

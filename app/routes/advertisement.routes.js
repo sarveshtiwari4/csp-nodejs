@@ -1,5 +1,6 @@
 module.exports = app => {
-  //const isvalid = require("../auth");
+  const isValid = require("./verifyToken");
+  
   console.log("200");
   const advertisement = require("../controllers/advertisement.controller.js");
 
@@ -7,7 +8,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Create a new advertisement
-  router.post("/", advertisement.create);
+  router.post("/", isValid,advertisement.create);
 
   // Retrieve all Tutorials
   router.get("/", advertisement.findAll);
@@ -19,13 +20,13 @@ module.exports = app => {
   router.get("/:id", advertisement.findOne);
 
   // Update a advertisement with id
-  router.put("/:id", advertisement.update);
+  router.put("/:id", isValid,advertisement.update);
 
   // Delete a advertisement with id
-  router.delete("/:id", advertisement.delete);
+  router.delete("/:id", isValid,advertisement.delete);
 
   // Delete all Tutorials
-  router.delete("/", advertisement.deleteAll);
+  router.delete("/", isValid,advertisement.deleteAll);
 
   app.use('/api/advertisement', router);
 };

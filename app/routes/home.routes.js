@@ -1,19 +1,18 @@
 module.exports = app => {
-  const isValid = require("../routes/verifyToken");
-  
+  const isValid = require("./verifyToken");
 
   const home = require("../controllers/home.controller.js");
   
   var router = require("express").Router();
 
   // Create a new home
-  router.post("/", home.create);
+  router.post("/",isValid, home.create);
 
   // Retrieve all Tutorials
   router.get("/" , home.findAll);
 
   // Retrieve all published Tutorials
-  router.get("/published",isValid, home.findAllPublished);
+  router.get("/published", home.findAllPublished);
 
   router.get("/publishedtop5",home.findAllPublishedtop5);
 
@@ -21,13 +20,13 @@ module.exports = app => {
   router.get("/:id", home.findOne);
 
   // Update a home with id
-  router.put("/:id", home.update);
+  router.put("/:id", isValid,home.update);
 
   // Delete a home with id
-  router.delete("/:id", home.delete);
+  router.delete("/:id",isValid, home.delete);
 
   // Delete all Tutorials
-  router.delete("/", home.deleteAll);
+  router.delete("/", isValid,home.deleteAll);
 
   app.use('/api/home', router);
 

@@ -1,5 +1,5 @@
 module.exports = app => {
-  //const isvalid = require("./auth");
+  const isValid = require("./verifyToken");
   
 
   const notification = require("../controllers/notification.controller.js");
@@ -7,7 +7,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Create a new notification
-  router.post("/", notification.create);
+  router.post("/", isValid, notification.create);
 
   // Retrieve all Tutorials
   router.get("/", notification.findAll);
@@ -19,13 +19,13 @@ module.exports = app => {
   router.get("/:id", notification.findOne);
 
   // Update a notification with id
-  router.put("/:id", notification.update);
+  router.put("/:id", isValid,notification.update);
 
   // Delete a notification with id
-  router.delete("/:id", notification.delete);
+  router.delete("/:id", isValid,notification.delete);
 
   // Delete all Tutorials
-  router.delete("/", notification.deleteAll);
+  router.delete("/", isValid,notification.deleteAll);
 
   app.use('/api/notification', router);
 

@@ -35,7 +35,11 @@ let model = {
     },
     findById: (id, cb) => {
         return db.query("SELECT * FROM users WHERE id=? ", [id], cb);
+    },
+
+   
     }
-}
+
+
 
 module.exports = model;

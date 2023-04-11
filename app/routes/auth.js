@@ -1,5 +1,7 @@
 //const { response } = require('express');
 
+const isValid = require("../routes/verifyToken");
+
 module.exports = app => {
 
     var express = require('express');
@@ -56,40 +58,45 @@ module.exports = app => {
        
     })
        
-    
+
     router.post('/login', function(req, res, next) {
 
+  
+         
         var pwd = req.body.password;
         const siteKey="rr6LkkkkfbR8shhhkAA2zjjjjMSqaBYcLPs16c4oX14555887"
 
         try {
-            var bytes = cryptojs.AES.decrypt(pwd, siteKey);
-            if (bytes.toString()) {
-              pwd= JSON.parse(bytes.toString(cryptojs.enc.Utf8));
-              req.body.password=pwd;
-            }
+                    var bytes = cryptojs.AES.decrypt(pwd, siteKey);
+                    if (bytes.toString()) {
+                    pwd= JSON.parse(bytes.toString(cryptojs.enc.Utf8));
+                    req.body.password=pwd;
+                    }
             
           } catch (e) {
-            console.log(e);
+                    console.log(e);
           }
 
-        passport.authenticate('local', {session: false}, function(err, user, info) {
+        passport.authenticate('local', {session: false}, function( err,user,info) {
             
             if (err) { return next(err); }
     
-            if ( ! user) {
-                return res.status(500).json(info.message)
-            }
+            if ( ! user){
+                            return res.status(500).json(info.message);
+                        }
     
+          
             const payload = {
-                username: user.last_name,
-                email: user.email
-            }
+                            username: user.last_name,
+                            email: user.email,
+                            id:user.id,
+                            }
+
             const options = {
-                subject: `${user.id}`,
-                expiresIn: 900
-            }
-          // console.log(payload);
+                            subject: `${user.id}`,
+                            expiresIn: 900
+                            }
+         
             const token = jwt.sign(payload, 'secret@#$%123',options);
             
             res.json({token});
@@ -97,5 +104,58 @@ module.exports = app => {
         })(req, res, next);
     })
     
+
+
+    router.get('/dashboard', isValid, (req, res)=> {
+    
+        const userId=req.userData.id;
+        
+        authModel.findById(userId, function(err, result){
+           
+         if(err){
+            res.json({ success:false, message: "Server Fail" });
+        }
+        if(result)
+            res.json({ success:true, data:result });
+        
+    });
+       
+    
+    })
+
+
+
+    router.get('/captcha',(req,res)=>{
+        
+     var alpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V'
+                         ,'W','X','Y','Z','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','g','h','i',
+                         'j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', '!','@','#','$','%','^','&','*','+'];
+                         var a = alpha[Math.floor(Math.random()*71)];
+                         var b = alpha[Math.floor(Math.random()*71)];
+                         var c = alpha[Math.floor(Math.random()*71)];
+                         var d = alpha[Math.floor(Math.random()*71)];
+                         var e = alpha[Math.floor(Math.random()*71)];
+                         var f = alpha[Math.floor(Math.random()*71)];
+        
+                         var final = a+b+c+d+e+f;
+                         
+                        
+          res.json({captcha:final})
+
+    })
+
+router.post('/matchcaptha',(req,res,next)=>{
+      var captcha=req.body.captcha;
+        var captcha2=req.body.captcha2;
+        
+       if (captcha!=captcha2){
+         return res.json({success:false,message:"Captcha Not Matched"});
+       }
+       else{
+        return res.json({success:true,message:"Captcha Matched"});
+       }
+   
+})
+
 app.use('/api/auth', router)
 }

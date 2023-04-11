@@ -1,5 +1,6 @@
 module.exports = app => {
-  //const isvalid = require("../auth");
+  const isValid = require("./verifyToken");
+
   console.log("200");
   const modelanswer = require("../controllers/modelanswer.controller.js");
 
@@ -7,7 +8,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Create a newmaster
-  router.post("/", modelanswer.create);
+  router.post("/",isValid, modelanswer.create);
 
   // Retrieve all Tutorials
   router.get("/",modelanswer.findAll);
@@ -19,13 +20,13 @@ module.exports = app => {
   router.get("/:id",modelanswer.findOne);
 
   // Update amaster with id
-  router.put("/:id",modelanswer.update);
+  router.put("/:id",isValid,modelanswer.update);
 
   // Delete amaster with id
-  router.delete("/:id",modelanswer.delete);
+  router.delete("/:id",isValid,modelanswer.delete);
 
   // Delete all Tutorials
-  router.delete("/",modelanswer.deleteAll);
+  router.delete("/",isValid,modelanswer.deleteAll);
 
   app.use('/api/modelanswer', router);
 };
