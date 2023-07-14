@@ -94,7 +94,7 @@ module.exports = app => {
 
             const options = {
                             subject: `${user.id}`,
-                            expiresIn: 900
+                            expiresIn: 60
                             }
          
             const token = jwt.sign(payload, 'secret@#$%123',options);
