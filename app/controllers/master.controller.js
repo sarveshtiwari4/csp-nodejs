@@ -73,6 +73,21 @@ exports.findAllPublished = (req, res) => {
   });
 };
 
+exports.findAllPublished2 = (req, res) => {
+  // console.log( req.headers);
+  master.getAllPublished2((err, data) => {
+     if (err)
+       res.status(500).send({
+         message:
+           err.message || "Some error occurred while retrieving tutorials."
+       });
+     else res.send(data);
+   });
+ };
+
+
+
+
 // Update amaster identified by the id in the request
 exports.update = (req, res) => {
 
@@ -91,7 +106,7 @@ exports.update = (req, res) => {
     });
   }
 
-  console.log(req.body);
+console.log(req.body);
 
  master.updateById(
     req.params.id,

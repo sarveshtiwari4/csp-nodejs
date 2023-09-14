@@ -16,6 +16,8 @@ module.exports = app => {
   // Retrieve all published Tutorials
   router.get("/published",master.findAllPublished);
 
+  router.get("/published2",master.findAllPublished2);
+
   // Retrieve a singlemaster with id
   router.get("/:id",master.findOne);
 

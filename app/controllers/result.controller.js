@@ -1,4 +1,5 @@
 const Result = require("../models/result.model.js");
+
 console.log("300");
 // Create and Save a new result
 exports.create = (req, res) => {

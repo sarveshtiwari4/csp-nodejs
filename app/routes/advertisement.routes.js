@@ -1,7 +1,8 @@
 module.exports = app => {
+
   const isValid = require("./verifyToken");
   
-  console.log("200");
+  
   const advertisement = require("../controllers/advertisement.controller.js");
 
   

@@ -1,7 +1,7 @@
 var express =require("express");
 var compression=require("compression");
 var  cors=require("cors");
-const passport = require("passport");
+
 require("./app/config/passport-config");
 const xXssProtection = require("x-xss-protection");
  
@@ -67,7 +67,7 @@ require("./app/routes/auth.js")(app);
 
 //require('./app/routes/product.js')(app);
 
-const PORT=process.env.PORT ||3000;
+const PORT=process.env.PORT || 3000;
 
 app.listen(PORT,()=>{
     console.log (`Server is running on port ${PORT}`);

@@ -1,7 +1,7 @@
 module.exports = app => {
   const isValid = require("./verifyToken");
 
-  console.log("200");
+ 
   const modelanswer = require("../controllers/modelanswer.controller.js");
 
   

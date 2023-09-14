@@ -1,5 +1,5 @@
 let jwt=require('jsonwebtoken');
-let authModel=require('../models/auth-model');
+//let authModel=require('../models/auth-model');
 
 function verifyToken(req, res, next){
 
@@ -9,6 +9,7 @@ function verifyToken(req, res, next){
     }
 
      token=req.headers.authorization.split(' ')[1];
+     
 
     if(token ==='null'){
         return res.status(401).send({message: "Unauthorized Request"});

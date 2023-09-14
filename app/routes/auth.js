@@ -81,20 +81,20 @@ module.exports = app => {
             
             if (err) { return next(err); }
     
-            if ( ! user){
+            if (!user){
                             return res.status(500).json(info.message);
-                        }
-    
-          
+                      }
+              
             const payload = {
-                            username: user.last_name,
+                            username: user.username,
                             email: user.email,
                             id:user.id,
                             }
 
             const options = {
-                            subject: `${user.id}`,
-                            expiresIn: 60
+                            algorithm: 'HS256', //New code added
+                            expiresIn: "15m",
+                            subject: `${user.id}`
                             }
          
             const token = jwt.sign(payload, 'secret@#$%123',options);

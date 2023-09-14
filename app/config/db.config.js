@@ -4,8 +4,8 @@ module.exports = {
   HOST:"website.cwpqv5kun7ea.ap-northeast-1.rds.amazonaws.com",
   USER: "admin",
   PASSWORD: "rootadmin",
-  //PASSWORD: "sarvesh",
+  //PASSWORD: "",
+  //DB: "cgpsc"
   DB: "website"
- // DB: "website"
 
   };

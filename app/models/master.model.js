@@ -72,6 +72,26 @@ Master.getAllPublished = master => {
   });
 };
 
+Master.getAllPublished2 = master => {
+  sql.query("SELECT * FROM master where published=1 and advt_no <> 999999 order by advt_no desc", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      master(null, err);
+      return;
+    }
+
+  //  console.log("master: ", res);
+    master(null, res);
+  });
+};
+
+
+
+
+
+
+
+
 Master.updateById = (id,  master,result) => {
   sql.query(
     "UPDATE master SET advt_no = ?, details = ?, published = ? WHERE item_code = ?",
