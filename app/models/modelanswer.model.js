@@ -10,7 +10,7 @@ const Modelanswer = function(modelanswer) {
 };
 
 Modelanswer.create = (newMa, modelanswer) => {
-  sql.query("INSERT INTO modelanswer SET ?", newMa, (err, res) => {
+  sql.query("INSERT INTO modelanswer SET ?; UPDATE master SET item_code=? WHERE advt_No=?", [newMa,newMa.item_code,newMa.advt_no], (err, res) => {
     if (err) {
       console.log("error: ", err);
       modelanswer(err, null);

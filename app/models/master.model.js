@@ -60,7 +60,7 @@ Master.getAll = (advt_no, master) => {
 };
 
 Master.getAllPublished = master => {
-  sql.query("SELECT * FROM master where published=1 order by advt_no desc", (err, res) => {
+  sql.query("SELECT * FROM master where published=1 order by item_code desc", (err, res) => {
     if (err) {
       console.log("error: ", err);
       master(null, err);
@@ -73,7 +73,7 @@ Master.getAllPublished = master => {
 };
 
 Master.getAllPublished2 = master => {
-  sql.query("SELECT * FROM master where published=1 and advt_no <> 999999 order by advt_no desc", (err, res) => {
+  sql.query("SELECT * FROM master where published=1 and advt_no <> 999999 order by item_code desc", (err, res) => {
     if (err) {
       console.log("error: ", err);
       master(null, err);

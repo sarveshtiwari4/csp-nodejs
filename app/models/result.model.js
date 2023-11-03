@@ -12,7 +12,7 @@ const Result = function(result) {
 };
 
 Result.create = (newResult, result) => {
-  sql.query("INSERT INTO result SET ?", newResult, (err, res) => {
+  sql.query("INSERT INTO result SET ?; UPDATE master SET item_code=? WHERE advt_No=?", [newResult,newResult.item_code, newResult.advt_no], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);

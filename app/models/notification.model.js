@@ -1,5 +1,6 @@
 const sql = require("./db.js");
 
+
 // constructor
 const Notification = function(notification) {
   this.item_code = notification.item_code;
@@ -10,10 +11,12 @@ const Notification = function(notification) {
 };
 
 Notification.create = (newNoti, result) => {
-  sql.query("INSERT INTO notification SET ?", newNoti, (err, res) => {
+
+     sql.query("INSERT INTO notification SET ?; UPDATE master SET item_code=? WHERE advt_No=?", [newNoti,newNoti.item_code,newNoti.advt_no],  (err, res) => {
     if (err) {
      // console.log("error: ", err);
       result(err, null);
+      console.log( result(err, null));
       return;
     }
 
@@ -75,7 +78,7 @@ Notification.getAllPublished = notification => {
 
 Notification.updateById = (id, notification, result) => {
   sql.query(
-    "UPDATE notification SET advt_no = ?, link = ?, details = ?, published = ? WHERE item_code = ?",
+    "UPDATE notification SET advt_no = ?, link = ?, details = ?, published = ? WHERE item_code = ? ",
     [notification.advt_no, notification.link, notification.details, notification.published,id],
     (err, res) => {
       if (err) {
@@ -83,7 +86,7 @@ Notification.updateById = (id, notification, result) => {
         result(null, err);
         return;
       }
-
+      
       if (res.affectedRows == 0) {
         // not found Home with the id
         result({ kind: "not_found" }, null);
@@ -94,6 +97,35 @@ Notification.updateById = (id, notification, result) => {
       result(null, { id: id, ...notification });
     }
   );
+//new code
+/* 
+sql.query(
+  "UPDATE master SET item_code = ? WHERE advt_no = ?",
+  [id,notification.advt_no],
+  (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    if (res.affectedRows == 0) {
+      // not found Home with the id
+      result({ kind: "not_found" }, null);
+      return;
+    }
+
+    console.log("updated Notification: ", { id: id, ...notification });
+    result(null, { id: id, ...notification });
+  }
+); */
+
+
+
+
+
+
+
 };
 
 Notification.remove = (id, result) => {

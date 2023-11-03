@@ -11,7 +11,7 @@ const OnlineApplication = function(onlineApplication) {
 };
 
 OnlineApplication.create = (newOA, onlineApplication) => {
-  sql.query("INSERT INTO onlineapplication SET ?", newOA, (err, res) => {
+  sql.query("INSERT INTO onlineapplication SET ?; UPDATE master SET item_code=? WHERE advt_No=?", [newOA,newOA.item_code,newOA.advt_no], (err, res) => {
     if (err) {
       console.log("error: ", err);
       onlineApplication(err, null);

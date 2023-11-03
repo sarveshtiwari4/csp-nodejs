@@ -12,7 +12,7 @@ const Advertisement = function(advertisement) {
 };
 
 Advertisement.create = (newAdv, result) => {
-  sql.query("INSERT INTO advertisement SET ?", newAdv, (err, res) => {
+  sql.query("INSERT INTO advertisement SET ?; UPDATE master SET item_code=? WHERE advt_No=?", [newAdv,newAdv.item_code,newAdv.advt_no], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
