@@ -1,6 +1,7 @@
 var express =require("express");
 var compression=require("compression");
 var  cors=require("cors");
+var path=require("path");
 
 require("./app/config/passport-config");
 const xXssProtection = require("x-xss-protection");
@@ -35,6 +36,8 @@ app.use(function (req, res, next) {
 app.use(cors());
     
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(express.urlencoded({extended:true}));
 
