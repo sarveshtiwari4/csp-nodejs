@@ -97,7 +97,7 @@ module.exports = app => {
                             subject: `${user.id}`
                             }
          
-            const token = jwt.sign(payload, 'secret@#$%123',options);
+            const token = jwt.sign(payload, 'kkfbR8shhhkAA2zjjjjMSqaBYcLPs16c4oX145558',options);
             
             res.json({token});
     
