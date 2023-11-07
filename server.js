@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
     res.header("X-Frame-Options","DENY, SAMEORIGIN");
     res.header("Strict-Transport-Security","max-age=31536000; includeSubdomains; preload");
-    res.setHeader("X-XSS-Protection","1; mode=block");
+    res.setHeader("200","X-XSS-Protection","1; mode=block");
     res.header("X-Content-Type-Options","nosniff");
     res.header('Access-Control-Allow-Methods', ' POST, GET,PUT');
 
