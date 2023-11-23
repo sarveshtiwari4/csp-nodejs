@@ -61,8 +61,6 @@ module.exports = app => {
 
     router.post('/login', function(req, res, next) {
 
-  
-         
         var pwd = req.body.password;
         const siteKey="rr6LkkkkfbR8shhhkAA2zjjjjMSqaBYcLPs16c4oX14555887"
 

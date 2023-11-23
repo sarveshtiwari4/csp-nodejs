@@ -5,9 +5,9 @@ var authModel = require('../models/auth-model');
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 
-var options = {};
-options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-options.secretOrKey = 'secret123'; 
+ var options = {};
+    options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+    options.secretOrKey = 'rr6LkkkkfbR8shhhkAA2zjjjjMSqaBYcLPs16c4oX14555887'; 
 
  passport.use(new LocalStrategy(
     {
@@ -32,7 +32,7 @@ options.secretOrKey = 'secret123';
              bcrypt.compare(password, user.password, function(err, result) {
 
                 if (!result) {
-                    return done( null,false, {message:'Incorrect password.'});
+                    return done(null,false, {message:'Incorrect password.'});
                    
                 }
                 return done(null, user);
@@ -43,16 +43,17 @@ options.secretOrKey = 'secret123';
     }
 ))
 
-passport.use(new JwtStrategy(options, function(jwtPayload, done) {
-    authModel.findById(jwtPayload.sub, function(err, result) {
-        if (err) {
-            return done(err, false);
-        }
+// passport.use(new JwtStrategy(options, function(jwtPayload, done) {
 
-        if (result.length === 0) {
-            return done(null, false);
-        }
+//     authModel.findById(jwtPayload.sub, function(err, result) {
+//         if (err) {
+//             return done(err, false);
+//         }
 
-        return done(null, result[0]);
-    })
-}))
+//         if (result.length === 0) {
+//             return done(null, false);
+//         }
+
+//         return done(null, result[0]);
+//     })
+// }))
