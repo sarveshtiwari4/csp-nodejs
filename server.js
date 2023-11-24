@@ -3,6 +3,7 @@ var compression=require("compression");
 var cors=require("cors");
 var path=require("path");
 var xXssProtection = require("x-xss-protection");
+require("./app/config/passport-config");
 
 var app =express();
 

@@ -43,17 +43,17 @@ var ExtractJwt = require('passport-jwt').ExtractJwt;
     }
 ))
 
-// passport.use(new JwtStrategy(options, function(jwtPayload, done) {
+passport.use(new JwtStrategy(options, function(jwtPayload, done) {
 
-//     authModel.findById(jwtPayload.sub, function(err, result) {
-//         if (err) {
-//             return done(err, false);
-//         }
+    authModel.findById(jwtPayload.sub, function(err, result) {
+        if (err) {
+            return done(err, false);
+        }
 
-//         if (result.length === 0) {
-//             return done(null, false);
-//         }
+        if (result.length === 0) {
+            return done(null, false);
+        }
 
-//         return done(null, result[0]);
-//     })
-// }))
+        return done(null, result[0]);
+    })
+}))
