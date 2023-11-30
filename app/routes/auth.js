@@ -1,6 +1,7 @@
 //const { response } = require('express');
 
 const isValid = require("../routes/verifyToken");
+var cache = require('memory-cache');
 
 module.exports = app => {
 
@@ -138,13 +139,14 @@ module.exports = app => {
         
                          var final = a+b+c+d+e+f;
                          
-                        
+        cache.put('captcha', final);      
           res.json({captcha:final})
 
     })
 
 router.post('/matchcaptha',(req,res,next)=>{
-      var captcha=req.body.captcha;
+     // var captcha=req.body.captcha;
+        var captcha=cache.get('captcha');
         var captcha2=req.body.captcha2;
         
        if (captcha!=captcha2){
