@@ -11,7 +11,8 @@ var app =express();
 app.use(xXssProtection());
 
 //app.set('etag', false);
-app.disable('etag');
+//app.disable('etag');
+//app.set('etag', false);
 
 //app.use('/product', passport.authenticate('jwt', { session: false }), productRouter);
 app.use(compression());
@@ -24,6 +25,7 @@ app.use(function (req, res, next) {
     res.setHeader("X-XSS-Protection","1;mode=block");
     res.header("X-Content-Type-Options","nosniff");
     res.header('Access-Control-Allow-Methods', 'POST, GET,PUT');
+    res.setHeader('Content-Security-Policy', "default-src * 'self' data: 'unsafe-inline'  'unsafe-hashes'; script-src * 'self' data: 'unsafe-inline' 'unsafe-hashes'; style-src * 'self' data: 'unsafe-inline' 'unsafe-hashes' https://fonts.googleapis.com; style-src-attr * 'self' data: 'unsafe-inline' 'unsafe-hashes'; img-src * 'self'; font-src * 'self' ;");
   
     next();
   });
@@ -36,7 +38,11 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, 'dist')));
+//app.use(express.static(path.join(__dirname, 'dist')));
+
+app.use(express.static(path.join(__dirname, 'dist'), {
+  etag: false
+}));
 
 app.use('/login',express.static(path.join(__dirname, 'dist')));
 

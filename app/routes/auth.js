@@ -68,7 +68,6 @@ module.exports = app => {
                     var bytes = cryptojs.AES.decrypt(pwd, siteKey);
                     if (bytes.toString()) {
                     pwd= JSON.parse(bytes.toString(cryptojs.enc.Utf8));
-                   // pwd= CryptoJS.AES.decrypt(pwd.toString(), siteKey).toString(CryptoJS.enc.Utf8);
                     req.body.password=pwd;
                     }
             
