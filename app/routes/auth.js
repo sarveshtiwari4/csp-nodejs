@@ -67,7 +67,7 @@ module.exports = app => {
         
             if (captcha!=captcha2){
                
-                return res.json({success:"2",message:"Captcha Not Matched"});
+                return res.json({success:"1",message:"Captcha Not Matched"});
                
                 }
 
@@ -98,9 +98,12 @@ module.exports = app => {
                       }
               
             const payload = {
-                            username: user.username,
-                            email: user.email,
-                            id:user.id
+                            // username: user.username,
+                            // email: user.email,
+                            // id:user.id,
+                            username: cryptojs.AES.encrypt(user.username, 'kkfbR8shhhkA').toString(),
+                            email: cryptojs.AES.encrypt(user.email, 'kkfbR8shhhkA').toString(),
+                            id: cryptojs.AES.encrypt(user.id, 'kkfbR8shhhkA').toString()
                             }
 
             const options = {
@@ -122,12 +125,17 @@ module.exports = app => {
 
     router.get('/dashboard', isValid, (req, res)=> {
     
-        const userId=req.userData.id;
-        
+       // const userId= req.userData.id;
+        const Id=  cryptojs.AES.decrypt(req.userData.id, 'kkfbR8shhhkA');
+        const userId = Id.toString(cryptojs.enc.Utf8)
+
+        console.log (userId);
+
         authModel.findById(userId, function(err, result){
            
          if(err){
             res.json({ success:false, message: "Server Fail" });
+            
         }
         if(result)
             res.json({ success:true, data:result });
