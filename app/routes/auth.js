@@ -62,6 +62,16 @@ module.exports = app => {
 
     router.post('/login', function(req, res, next) {
 
+            var captcha=cache.get('captcha');
+            var captcha2=req.body.captcha2;
+        
+            if (captcha!=captcha2){
+               
+                return res.json({success:"2",message:"Captcha Not Matched"});
+               
+                }
+
+
         var pwd = req.body.password;
         const siteKey="rr6LkkkkfbR8shhhkAA2zjjjjMSqaBYcLPs16c4oX14555887"
 
@@ -76,30 +86,34 @@ module.exports = app => {
                     console.log(e);
           }
 
-        passport.authenticate('local', {session: false}, function( err,user,info) {
+            passport.authenticate('local', {session: false}, function( err,user,info) {
             
             if (err) { return next(err); }
+
+            
     
             if (!user){
-                            return res.status(500).json(info.message);
+
+                return res.json({success:"2",message:"Incorrect User Credentials..."});
                       }
               
             const payload = {
                             username: user.username,
                             email: user.email,
                             id:user.id
-                
                             }
 
             const options = {
                             algorithm: 'HS256', //New code added
-                            expiresIn: "15m",
+                            expiresIn: "24H",
                             subject: `${user.id}`
                             }
          
             const token = jwt.sign(payload, 'kkfbR8shhhkAA2zjjjjMSqaBYcLPs16c4oX145558',options);
             
-            res.json({token});
+             res.json({success:"3",token});
+
+             //res.json({token});
     
         })(req, res, next);
     })
