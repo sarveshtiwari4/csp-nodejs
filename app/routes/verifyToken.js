@@ -1,4 +1,6 @@
 let jwt=require('jsonwebtoken');
+const fs = require('fs');
+var publicKey = fs.readFileSync('./app/config/public.key','utf8');
 //let authModel=require('../models/auth-model');
 
 function verifyToken(req, res, next){
@@ -15,7 +17,7 @@ function verifyToken(req, res, next){
         return res.status(401).send({message: "Unauthorized Request"});
     }
     
-   jwt.verify(token,"kkfbR8shhhkAA2zjjjjMSqaBYcLPs16c4oX145558", (err, decoded) => {
+   jwt.verify(token, publicKey, (err, decoded) => {
     
     if (err) {
       return res.status(401).send({message: "Unauthorized!"});

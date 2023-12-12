@@ -1,6 +1,10 @@
 //const { response } = require('express');
 
 const isValid = require("../routes/verifyToken");
+const fs = require('fs');
+var privateKey = fs.readFileSync('./app/config/private.key','utf8');
+
+
 var cache = require('memory-cache');
 
 module.exports = app => {
@@ -17,7 +21,7 @@ module.exports = app => {
                
 
         const password = req.body.password;
-        const saltRounds = 10;
+        const saltRounds = 9;
         bcrypt.hash(password, saltRounds, function(err, hash) {
             req.body.password = hash;
             authModel.signup(req.body, function(err, result) {
@@ -101,18 +105,18 @@ module.exports = app => {
                             // username: user.username,
                             // email: user.email,
                             // id:user.id,
-                            username: cryptojs.AES.encrypt(user.username, 'kkfbR8shhhkA').toString(),
-                            email: cryptojs.AES.encrypt(user.email, 'kkfbR8shhhkA').toString(),
-                            id: cryptojs.AES.encrypt(user.id, 'kkfbR8shhhkA').toString()
+                            username: cryptojs.AES.encrypt(user.username, 'kkfbR8shhhkA11').toString(),
+                            email: cryptojs.AES.encrypt(user.email, 'kkfbR8shhhkA22').toString(),
+                            id: cryptojs.AES.encrypt(user.id, 'kkfbR8shhhkA33').toString()
                             }
 
             const options = {
-                            algorithm: 'HS256', //New code added
+                            algorithm: "RS256", //New code added
                             expiresIn: "24H",
                             subject: `${user.id}`
                             }
          
-            const token = jwt.sign(payload, 'kkfbR8shhhkAA2zjjjjMSqaBYcLPs16c4oX145558',options);
+            const token = jwt.sign(payload, privateKey,options);
             
              res.json({success:"3",token});
 
@@ -126,7 +130,7 @@ module.exports = app => {
     router.get('/dashboard', isValid, (req, res)=> {
     
        // const userId= req.userData.id;
-        const Id=  cryptojs.AES.decrypt(req.userData.id, 'kkfbR8shhhkA');
+        const Id=  cryptojs.AES.decrypt(req.userData.id, 'kkfbR8shhhkA33');
         const userId = Id.toString(cryptojs.enc.Utf8)
 
         console.log (userId);
