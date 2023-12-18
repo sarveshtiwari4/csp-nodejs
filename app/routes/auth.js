@@ -37,6 +37,7 @@ module.exports = app => {
         const oldpassword = req.body.oldpassword;
         const saltRounds = 10;
        // let findone_result;
+
         authModel.findOne(username, function(err,result) {
            
             if (err) return console.log(err);
@@ -100,6 +101,25 @@ module.exports = app => {
 
                 return res.json({success:"2",message:"Incorrect User Credentials... "});
                       }
+
+                      
+        var token_cache=cache.get('token');
+                    
+
+        var c_time =new Date();
+
+         if (token_cache != null) {
+
+            var decoded = jwt.decode(token_cache, { complete: true });
+            console.log(decoded.payload.exp);
+           
+           // console.log (new Date(exp));
+            if ((new Date(decoded.payload.exp * 1000)) > c_time ){
+            return res.json({success:"4", message:"Active Session Exist... "});
+            }
+         }
+
+
               
             const payload = {
                             // username: user.username,
@@ -112,13 +132,14 @@ module.exports = app => {
 
             const options = {
                             algorithm: "RS256", //New code added
-                            expiresIn: "24H",
+                            expiresIn: "1m",
                             subject: `${user.id}`
                             }
-         
-            const token = jwt.sign(payload, privateKey,options);
             
-             res.json({success:"3",token});
+            const token = jwt.sign(payload, privateKey,options);
+            cache.put('token', token); 
+
+            res.json({success:"3",token});
 
              //res.json({token});
     

@@ -1,6 +1,8 @@
 let jwt=require('jsonwebtoken');
 const fs = require('fs');
 var publicKey = fs.readFileSync('./app/config/public.key','utf8');
+var cache = require('memory-cache');
+
 //let authModel=require('../models/auth-model');
 
 function verifyToken(req, res, next){
@@ -12,8 +14,16 @@ function verifyToken(req, res, next){
 
      token=req.headers.authorization.split(' ')[1];
      
+     var token_cache=cache.get('token');
+     
+     if(token != token_cache){
 
-    if(token ==='null'){
+       return res.status(401).send({message: "Unauthorized Request"});
+    }
+
+
+       
+     if(token ==='null'){
         return res.status(401).send({message: "Unauthorized Request"});
     }
     
