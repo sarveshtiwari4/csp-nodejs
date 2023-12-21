@@ -90,13 +90,16 @@ exports.findAllPublishedtop5 = (req, res) => {
 
 
 // Update a home identified by the id in the request
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
+  
   const home = new Home({
     item_code: req.body.txtitemcode,
     advt_no:req.body.txtadvtno2,
     details: req.body.txtdetails,
     link: req.body.txtlink,
     published: req.body.txtpublished2 
+
+
   });
 
   // Validate Request
@@ -108,10 +111,7 @@ exports.update = (req, res) => {
 
   console.log(req.body);
 
-  Home.updateById(
-    req.params.id,
-    home,
-    (err, data) => {
+  await Home.updateById( req.params.id,home,(err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
