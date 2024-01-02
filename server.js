@@ -44,19 +44,33 @@ app.use(express.static(path.join(__dirname, 'dist'), {
   etag: false
 }));
 
-app.use('/login',express.static(path.join(__dirname, 'dist')));
+app.use('/login',express.static(path.join(__dirname, 'dist'), {
+  etag: false
+}));
 
-app.use('/aboutus',express.static(path.join(__dirname, 'dist')));
+app.use('/aboutus',express.static(path.join(__dirname, 'dist'), {
+  etag: false
+}));
 
-app.use('/rti',express.static(path.join(__dirname, 'dist')));
+app.use('/rti',express.static(path.join(__dirname, 'dist'), {
+  etag: false
+}));
 
-app.use('/examdetails',express.static(path.join(__dirname, 'dist')));
+app.use('/examdetails',express.static(path.join(__dirname, 'dist'), {
+  etag: false
+}));
 
-app.use('/directory',express.static(path.join(__dirname, 'dist')));
+app.use('/directory',express.static(path.join(__dirname, 'dist'), {
+  etag: false
+}));
 
-app.use('/contactus',express.static(path.join(__dirname, 'dist')));
+app.use('/contactus',express.static(path.join(__dirname, 'dist'), {
+  etag: false
+}));
 
-app.use('/adminpannel',express.static(path.join(__dirname, 'dist')));
+app.use('/adminpannel',express.static(path.join(__dirname, 'dist'), {
+  etag: false
+}));
 
 
 app.use(express.urlencoded({extended:true}));
