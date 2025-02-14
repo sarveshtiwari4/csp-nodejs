@@ -88,10 +88,6 @@ Master.getAllPublished2 = master => {
 
 
 
-
-
-
-
 Master.updateById = (id,  master,result) => {
   sql.query(
     "UPDATE master SET advt_no = ?, details = ?, published = ? WHERE item_code = ?",

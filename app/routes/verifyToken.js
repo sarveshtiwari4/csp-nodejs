@@ -15,12 +15,12 @@ function verifyToken(req, res, next){
      token=req.headers.authorization.split(' ')[1];
      
      var token_cache=cache.get('token');
-     
+  
+
      if(token != token_cache){
 
        return res.status(401).send({message: "Unauthorized Request"});
     }
-
 
        
      if(token ==='null'){

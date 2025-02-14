@@ -35,7 +35,7 @@ module.exports = app => {
         const username = req.body.username;
         const password = req.body.password;
         const oldpassword = req.body.oldpassword;
-        const saltRounds = 10;
+        const saltRounds = 9;
        // let findone_result;
 
         authModel.findOne(username, function(err,result) {
@@ -111,7 +111,7 @@ module.exports = app => {
          if (token_cache != null) {
 
             var decoded = jwt.decode(token_cache, { complete: true });
-            console.log(decoded.payload.exp);
+            //console.log(decoded.payload.exp);
            
            // console.log (new Date(exp));
             if ((new Date(decoded.payload.exp * 1000)) > c_time ){
@@ -132,18 +132,19 @@ module.exports = app => {
 
             const options = {
                             algorithm: "RS256", //New code added
-                            expiresIn: "1m",
+                            expiresIn: "15m",
                             subject: `${user.id}`
                             }
             
             const token = jwt.sign(payload, privateKey,options);
+            
             cache.put('token', token); 
 
             res.json({success:"3",token});
 
              //res.json({token});
     
-        })(req, res, next);
+        })(req, res); //(req, res,next); //updated on 16-12-2024
     })
     
 
@@ -154,7 +155,7 @@ module.exports = app => {
         const Id=  cryptojs.AES.decrypt(req.userData.id, 'kkfbR8shhhkA33');
         const userId = Id.toString(cryptojs.enc.Utf8)
 
-        console.log (userId);
+        //console.log (userId);
 
         authModel.findById(userId, function(err, result){
            
@@ -165,7 +166,7 @@ module.exports = app => {
         if(result)
             res.json({ success:true, data:result });
         
-    });
+        });
        
     
     })
